@@ -113,9 +113,16 @@ void Simulation::updateAuto()
 		}
 		else { spawn = Direction::NOWHERE; }
 	}
-	else if (rndAnfahrt < 50) {
+	else if (rndAnfahrt < 36) {
 		if (Functions::checkSpawnEast(autos) == 0) {
 			spawn = Direction::EAST;
+			//std::cout << "spawn auf ost" << std::endl;
+		}
+		else { spawn = Direction::NOWHERE; }
+	}
+	else if (rndAnfahrt < 50) {
+		if (Functions::checkSpawnEast(autos) == 0) {
+			spawn = Direction::EAST_W;
 			//std::cout << "spawn auf ost" << std::endl;
 		}
 		else { spawn = Direction::NOWHERE; }
@@ -124,6 +131,13 @@ void Simulation::updateAuto()
 		if (Functions::checkSpawnSouth(autos) == 0) {
 			spawn = Direction::SOUTH;
 			//std::cout << "spawn auf sued" << std::endl;
+		}
+		else { spawn = Direction::NOWHERE; }
+	}
+	else if(rndAnfahrt < 79){
+		if (Functions::checkSpawnWest(autos) == 0) {
+			spawn = Direction::WEST_E;
+			//std::cout << "spawn auf west" << std::endl;
 		}
 		else { spawn = Direction::NOWHERE; }
 	}
@@ -223,9 +237,9 @@ void Simulation::update()
 	while (this->window2->pollEvent(u))
 	{
 		if (u.Event::type == sf::Event::Closed)
-			this->window->close();
+			this->window2->close();
 		if (u.Event::KeyPressed && u.Event::key.code == sf::Keyboard::Escape)
-			this->window->close();
+			this->window2->close();
 	}
 
 	for (auto* car : this->autos)
@@ -280,6 +294,16 @@ void Simulation::update()
 	// if (this->spawnTimer == 1000 || this->spawnTimer == 2000) {
 	// 	this->updateAmpel8();
 	// }
+}
+bool Simulation::Ampel_green()
+{
+	if (ampel->Ampel_up() != false)
+	{
+		return true;
+	}
+	else
+		return false;
+
 }
 
 void Simulation::render() {

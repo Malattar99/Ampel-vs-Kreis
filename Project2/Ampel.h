@@ -14,7 +14,8 @@ private:
 
 	void initTexture(Ampel_Farbe f);
 	void initSprite();
-
+	bool ampel_up;
+	
 
 public:
 	Ampel(Ampel_Seite seite, Ampel_Farbe ampel_farbe);
@@ -25,7 +26,7 @@ public:
 	sf::Time elapsed1 = clock.getElapsedTime();
 	void initClock();
 
-	bool ampel_up;
+	
 	bool Ampel_up();
 	
 	void render(sf::RenderTarget& target);

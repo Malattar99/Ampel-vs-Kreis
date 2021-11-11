@@ -2,7 +2,7 @@
 #include <math.h>
 
 enum class Direction {
-	NORTH, EAST, SOUTH, WEST, NOWHERE
+	NORTH, EAST, EAST_W, SOUTH, WEST,WEST_E,  NOWHERE
 };
 
 enum class Color {

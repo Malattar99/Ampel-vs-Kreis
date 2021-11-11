@@ -19,11 +19,13 @@ private:
 
 	//Autos im kreisverkehr
 	std::vector<AutosO*> autoso;
+	Ampel* ampel;
 	//Hintergrund
 	sf::Texture KreuzverkehrTex;
 	sf::Sprite Kreuzverkehr;
 	sf::Texture KreisverkehrTex;
 	sf::Sprite Kreisverkehr;
+
 
 	bool checkDistance(Autos obj_1, Autos obj_2);
 	void initWindow();
@@ -41,6 +43,7 @@ public:
 	void updateAllAmpel();
 	void updateAuto();
 	void updateAmpel(int index);
+	bool Ampel_green();
 	void update();
 	void render();
 	void createAmpel();

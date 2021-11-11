@@ -19,20 +19,20 @@ void Autos::initSprite()
     this->sprite.setOrigin(320, 640);
 }
 
+
+
 void Autos::beschleunigung()
 {
     this->speedp = speedp + 0.005;
     this->speedm = speedm - 0.005;
 }
 
-bool Autos::Ampel_green()
+void Autos::AntiCrash()
 {
-    if (ampel->Ampel_up()== true)
-        return true;
-    else
-        return false;
-   
+    
 }
+
+
 
 void Autos::bremsung()
 {
@@ -53,9 +53,11 @@ Autos::Autos(Direction spawn, Color color, Direction direction)
 {
     this->originalDirection = direction;
     switch (spawn) {
-    case Direction::WEST: this->sprite.setPosition(20.f, 550.f); direction = Direction::EAST; break;
+    case Direction::WEST: this->sprite.setPosition(20.f, 510.f); direction = Direction::EAST; abbiegen = true; break;
+    case Direction::WEST_E: this->sprite.setPosition(20.f, 640.f); direction = Direction::EAST; abbiegen = false; break;
     case Direction::NORTH: this->sprite.setPosition(450.f, 30.f); direction = Direction::SOUTH; break;
-    case Direction::EAST: this->sprite.setPosition(990.f, 450.f); direction = Direction::WEST; break;
+    case Direction::EAST: this->sprite.setPosition(990.f, 510.f); direction = Direction::WEST; abbiegen = true; break;
+    case Direction::EAST_W: this->sprite.setPosition(990.f, 350.f); direction = Direction::WEST; abbiegen = false; break;
     case Direction::SOUTH: this->sprite.setPosition(550.f, 970.f); direction = Direction::NORTH; break;
     }
 
@@ -65,6 +67,8 @@ Autos::Autos(Direction spawn, Color color, Direction direction)
     switch (direction) {
     case Direction::NORTH: this->sprite.setRotation(0.f); break;
     case Direction::EAST: this->sprite.setRotation(90.f); break;
+    case Direction::EAST_W: this->sprite.setRotation(90.f); break;
+    case Direction::WEST_E: this->sprite.setRotation(270.f); break;
     case Direction::SOUTH: this->sprite.setRotation(180.f); break;
     case Direction::WEST: this->sprite.setRotation(270.f); break;
     }
@@ -105,13 +109,13 @@ void Autos::update()
         if (sprite.getPosition().y >= 450 && sprite.getPosition().y <= 560)
         {
 
-            if (rndValue < 4 && Ampel_green() != false)
+            if (rndValue < 4)
             {
                 this->sprite.move(speedm, 0.f); //richtung westen
                 this->sprite.setRotation(-90.f);
 
             }
-            else if (rndValue >= 4 && rndValue < 8 && Ampel_green() != false)
+            else if (rndValue >= 4 && rndValue < 8 )
             {
                 if (sprite.getPosition().y >= 550)
                 {
@@ -120,7 +124,7 @@ void Autos::update()
                 }
                 else this->sprite.move(0.f, speedp);
             }
-            else if( Ampel_green() != false)
+            else 
             {
                 this->sprite.move(0.f, speedp);
             }
@@ -134,10 +138,11 @@ void Autos::update()
 
     case Direction::EAST: {
         this->beschleunigung();
-        if (sprite.getPosition().x >= 460 && sprite.getPosition().x <= 560)
+       
+        if (sprite.getPosition().x >= 460 && sprite.getPosition().x <= 560 && abbiegen == true)
         {
-
-            if (rndValue < 8 && Ampel_green() != false)
+            
+            if (rndValue < 8 )
             {
 
                 if (sprite.getPosition().x >= 550 )
@@ -147,31 +152,35 @@ void Autos::update()
                 }
                 else this->sprite.move(speedp, 0.f);
             }
-            else if (rndValue > 8 && Ampel_green() != false)
+            else if (rndValue >= 8 )
             {
                 this->sprite.move(0.f, speedp); //richtung s�den
                 this->sprite.setRotation(180.f);
             }
-            else if(Ampel_green() != false)
-            {
-                this->sprite.move(speedp, 0.f);
-            }
+            
         }
         else this->sprite.move(speedp, 0.f);
+        break;
+    }
+    case Direction::EAST_W: {
+
+        this->beschleunigung();
+        this->sprite.move(speedp, 0.f);
+        
         break;
     }
 
     case Direction::WEST: {
         this->beschleunigung();
-        if (sprite.getPosition().x <= 550 && sprite.getPosition().x >= 440)
+        if (sprite.getPosition().x <= 550 && sprite.getPosition().x >= 440 && abbiegen == true)
         {
 
-            if (rndValue < 9 && Ampel_green() != false)
+            if (rndValue < 9 )
             {
                 this->sprite.move(0.f, speedm); //richtung Norden
                 this->sprite.setRotation(0.f);
             }
-            else if (rndValue > 8 && Ampel_green() != false)
+            else if (rndValue > 8 )
             {
                 if (sprite.getPosition().x <= 450)
                 {
@@ -180,12 +189,14 @@ void Autos::update()
                 }
                 else this->sprite.move(speedm, 0.f);
             }
-            else if( Ampel_green() != false)
-            {
-                this->sprite.move(speedm, 0.f);
-            }
+            
         }
         else this->sprite.move(speedm, 0.f);
+        break;
+    }
+    case Direction::WEST_E: {
+        this->beschleunigung();
+        this->sprite.move(speedm, 0);
         break;
     }
     case Direction::NORTH: {
@@ -193,7 +204,7 @@ void Autos::update()
         if (sprite.getPosition().y <= 550)
         {
 
-            if (rndValue < 4 && Ampel_green() != false)
+            if (rndValue < 4 )
             {
                 if (sprite.getPosition().y <= 450)
                 {
@@ -202,12 +213,12 @@ void Autos::update()
                 }
                 else this->sprite.move(0.f, speedm);
             }
-            else if (rndValue >= 4 && rndValue < 8 && Ampel_green() != false)
+            else if (rndValue >= 4 && rndValue < 8 )
             {
                 this->sprite.move(speedp, 0.f); //richtung osten
                 this->sprite.setRotation(90.f);
             }
-            else if( Ampel_green() != false)
+            else 
             {
                 this->sprite.move(0.f, speedm);
             }

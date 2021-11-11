@@ -61,10 +61,10 @@ Ampel::Ampel(Ampel_Seite seite, Ampel_Farbe farbe)
 {
     //spawn: start direction, setposition: start coordinates, Direction: end direction
     switch (seite) {
-    case Ampel_Seite::OBEN:   this->sprite.setPosition(430.f, 410.f); break;
-    case Ampel_Seite::UNTEN: this->sprite.setPosition(570.f, 620.f); break;
-    case Ampel_Seite::RECHTS: this->sprite.setPosition(570.f, 410.f); break;
-    case Ampel_Seite::LINKS:  this->sprite.setPosition(430.f, 625.f); break;
+    case Ampel_Seite::OBEN:   this->sprite.setPosition(380.f, 280.f); break;
+    case Ampel_Seite::UNTEN: this->sprite.setPosition(620.f, 720.f); break;
+    case Ampel_Seite::RECHTS: this->sprite.setPosition(620.f, 280.f); break;
+    case Ampel_Seite::LINKS:  this->sprite.setPosition(380.f, 720.f); break;
     }
     this->color = farbe;
     this->ampel_up = true;

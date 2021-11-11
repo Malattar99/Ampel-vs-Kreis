@@ -5,6 +5,7 @@
 #include "CarProp.h"
 #include <math.h>
 #include "Ampel.h"
+
 #ifndef AUTOS
 #define AUTOS
 using namespace std;
@@ -18,6 +19,7 @@ private:
 	void initTexture(Color c);
 	void initSprite();
 	int rndValue = rand() % 10;
+	bool abbiegen;
 
 public:
 	sf::Sprite sprite;
@@ -25,7 +27,7 @@ public:
 	virtual ~Autos();
 	Direction currentDirection;
 	Direction originalDirection;
-	Ampel* ampel;
+	
 	//bool const stopWO;
 	const sf::Vector2f getPos() const;
 	const bool checkIfInFront() const;
@@ -35,8 +37,9 @@ public:
 	float speedm = -0.005;
 	void bremsung();
 	void beschleunigung();
+	void AntiCrash();
 
-	bool Ampel_green();
+	
 
 	void update();
 	void render(sf::RenderTarget& target);
